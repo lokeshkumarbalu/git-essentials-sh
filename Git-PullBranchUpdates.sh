@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Check if the working tree is clean
-currentStatus=$(git status)
-if [[ $currentStatus != *"working directory clean"* ]]; 
+# Check if the working tree is clean.
+differenceCount=$(git diff-index --name-only HEAD | wc -w)
+
+if [[ $differenceCount -gt 0 ]];
 then
     # Print message if uncommited changes found.
     echo "Working directory is not clean, commit or discard changes."
