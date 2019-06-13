@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./Git-Common.sh
+source Git-Common.sh
 IsGitRepository
 
 if [[ $? -eq 1 ]]
@@ -22,13 +22,10 @@ then
             git checkout $branch 1> /dev/null
             git pull
         done
+
+        # Checkout to master branch once all the update is done.
+        echo ""
+        echo "All brnaches have been updated."
+        git checkout master &> /dev/null
     fi
-
-    # Checkout to master branch once all the update is done.
-    echo ""
-    echo "All brnaches have been updated."
-    git checkout master
 fi
-
-
-
