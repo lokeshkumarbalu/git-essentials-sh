@@ -19,10 +19,13 @@ then
         # Loop through the local branches and update them one by one.
         for branch in $localBranches
         do
-            git checkout $branch
+            git checkout $branch 1> /dev/null
             git pull
         done
     fi
+
+    # Checkout to master branch once all the update is done.
+    git checkout master
 fi
 
 
