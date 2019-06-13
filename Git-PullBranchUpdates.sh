@@ -25,6 +25,8 @@ then
     fi
 
     # Checkout to master branch once all the update is done.
+    echo ""
+    echo "All brnaches have been updated."
     git checkout master
 fi
 
