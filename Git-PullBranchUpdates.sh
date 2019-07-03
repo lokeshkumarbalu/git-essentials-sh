@@ -25,7 +25,7 @@ then
 
         # Checkout to master branch once all the update is done.
         echo ""
-        echo "All brnaches have been updated."
+        echo "All branches have been updated."
         git checkout master &> /dev/null
     fi
 fi
