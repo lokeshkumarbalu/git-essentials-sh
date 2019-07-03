@@ -3,6 +3,8 @@
 source Git-Common.sh
 IsGitRepository
 
+git fetch
+
 if [[ $? -eq 1 ]]
 then
     # Check if the working tree is clean.
@@ -20,12 +22,17 @@ then
         for branch in $localBranches
         do
             git checkout $branch 1> /dev/null
-            git pull
+            remote=$(git rev-parse --abbrev-ref --symbolic-full-name @{u})
+
+            if git merge-base --is-ancestor $branch $remote; then
+                echo ""
+                git merge --ff-only $remote
+            fi
         done
 
         # Checkout to master branch once all the update is done.
         echo ""
-        echo "All brnaches have been updated."
+        echo "All branches have been updated."
         git checkout master &> /dev/null
     fi
 fi
