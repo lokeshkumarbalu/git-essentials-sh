@@ -25,6 +25,7 @@ then
             remote=$(git rev-parse --abbrev-ref --symbolic-full-name @{u})
 
             if git merge-base --is-ancestor $branch $remote; then
+                echo ""
                 git merge --ff-only $remote
             fi
         done
