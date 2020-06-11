@@ -34,7 +34,7 @@ IsGitRepository
 
 if [[ $? -eq 1 ]]
 then 
-    echo "Delete local and remote banches if they have been merged."
+    echo $(printf "Delete banches if they have been merged. Mode: { Local: %s; Remote: %s }" $Local $Remote)
     git fetch
 
     # Check if the working tree is clean.
@@ -47,15 +47,15 @@ then
         git pull &> /dev/null
 
         # Get all the merged branches with master.
-        if [[ $Local ]]; then mergedBranches=$(git branch --merged master | grep feature*)
-        elif [[ $Remote ]]; then mergedBranches=$(git branch --merged master --remotes | grep feature*)
+        if $Local; then mergedBranches=$(git branch --merged master | grep feature*)
+        elif $Remote; then mergedBranches=$(git branch --merged master --remotes | grep origin/feature* | cut -c 10-)
         fi
 
         # Loop through the merged branches and delete them.
         for branch in $mergedBranches
         do 
-            if [[ $Local ]]; then git branch --delete $branch
-            elif [[ $Remote ]]; then git push --delete origin $branch
+            if $Local; then git branch --delete $branch
+            elif $Remote; then git push --delete origin $branch
             fi
         done 
     else

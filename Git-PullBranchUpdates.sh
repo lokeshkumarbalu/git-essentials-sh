@@ -13,7 +13,7 @@ then
     if [[ $differenceCount -gt 0 ]];
     then
         # Print message if uncommited changes found.
-        echo "Working tree is not clean, commit or discard changes."
+        printf "Working tree is not clean, commit or discard changes."
     else
         # Get all the local branches.
         localBranches=$(git branch | sed -e 's/*/ /g')
@@ -24,15 +24,13 @@ then
             git checkout $branch 1> /dev/null
             remote=$(git rev-parse --abbrev-ref --symbolic-full-name @{u})
 
-            if git merge-base --is-ancestor $branch $remote; then
-                echo ""
-                git merge --ff-only $remote
+            if git merge-base --is-ancestor $branch $remote; 
+                then git merge --ff-only $remote
             fi
         done
 
         # Checkout to master branch once all the update is done.
-        echo ""
-        echo "All branches have been updated."
+        printf "All branches have been updated."
         git checkout master &> /dev/null
     fi
 fi
