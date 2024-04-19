@@ -1,14 +1,11 @@
 #!/bin/bash
 
 source Git-Common.sh
-IsGitRepository
 
-if [[ $? -eq 1 ]]
+if IsGitRepository
 then
-    # Check if the working tree is clean.
-    IsWorkingDirectoryClean
 
-    if [[ $? -eq 0 ]];
+    if IsWorkingDirectoryClean;
     then
         # Print message if uncommited changes found.
         echo "Working tree is not clean, commit or discard changes."
@@ -20,11 +17,11 @@ then
         # Loop through the local branches and update them one by one.
         for branch in $localBranches
         do
-            git checkout $branch 1> /dev/null
+            git checkout "$branch" 1> /dev/null
             remote=$(git rev-parse --abbrev-ref --symbolic-full-name @{u})
 
-            if git merge-base --is-ancestor $branch $remote; 
-                then git merge --ff-only $remote
+            if git merge-base --is-ancestor "$branch" "$remote";
+                then git merge --ff-only "$remote"
             fi
         done
 

@@ -3,7 +3,6 @@
 Local=false
 Remote=false
 
-Parameters=()
 while [[ $# -gt 0 ]]
 do
     key="$1"
@@ -23,18 +22,17 @@ do
     esac
 done
 
-if [[ $Local == $Remote ]] 
+if [[ $Local == "$Remote" ]]
 then 
     echo "Cannot run without an option, specify --local or --remote" 
     exit
 fi
 
 source Git-Common.sh
-IsGitRepository
 
-if [[ $? -eq 1 ]]
+if IsGitRepository
 then 
-    echo $(printf "Delete banches if they have been merged. Mode: { Local: %s; Remote: %s }" $Local $Remote)
+    printf "Delete branches if they have been merged. Mode: { Local: %s; Remote: %s }\n" $Local $Remote
     git fetch
 
     # Check if the working tree is clean.
@@ -47,15 +45,15 @@ then
         git pull &> /dev/null
 
         # Get all the merged branches with master.
-        if $Local; then mergedBranches=$(git branch --merged master | grep feature*)
-        elif $Remote; then mergedBranches=$(git branch --merged master --remotes | grep origin/feature* | cut -c 10-)
+        if $Local; then mergedBranches=$(git branch --merged master | grep 'feature.*')
+        elif $Remote; then mergedBranches=$(git branch --merged master --remotes | grep 'origin/feature.*' | cut -c 10-)
         fi
 
         # Loop through the merged branches and delete them.
         for branch in $mergedBranches
         do 
-            if $Local; then git branch --delete $branch
-            elif $Remote; then git push --delete origin $branch
+            if $Local; then git branch --delete "$branch"
+            elif $Remote; then git push --delete origin "$branch"
             fi
         done 
     else
