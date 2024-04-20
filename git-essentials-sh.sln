@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8BA43B64-692
 		src\Git-PullBranchUpdates.sh = src\Git-PullBranchUpdates.sh
 		src\Git-DeleteMergedBranches.sh = src\Git-DeleteMergedBranches.sh
 		src\Git-Common.sh = src\Git-Common.sh
+		src\Git-SyncWithOriginMaster.sh = src\Git-SyncWithOriginMaster.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{8304DC02-2552-47B7-AF97-319248032AEB}"
