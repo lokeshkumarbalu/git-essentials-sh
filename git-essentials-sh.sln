@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{562D9D60-67AE-443C-94E0-0638A3A10618}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8BA43B64-692A-440A-8593-AED39A759C1F}"
+	ProjectSection(SolutionItems) = preProject
+		src\Git-SyncTags.sh = src\Git-SyncTags.sh
+		src\Git-PullBranchUpdates.sh = src\Git-PullBranchUpdates.sh
+		src\Git-DeleteMergedBranches.sh = src\Git-DeleteMergedBranches.sh
+		src\Git-Common.sh = src\Git-Common.sh
+		src\Git-SyncWithOriginMaster.sh = src\Git-SyncWithOriginMaster.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{8304DC02-2552-47B7-AF97-319248032AEB}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		readme.md = readme.md
+		.editorconfig = .editorconfig
+		test.sh = test.sh
+		build.cmd = build.cmd
+		build.sh = build.sh
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "build", "build\build.csproj", "{6E40E36B-A01B-4492-8501-2C8556F147CB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4F5CB026-E8F5-4F82-9B53-B5D3338FAB53}"
+	ProjectSection(SolutionItems) = preProject
+		tests\GetCurrentBranch.Tests.bats = tests\GetCurrentBranch.Tests.bats
+		tests\IsGitRepository.Tests.bats = tests\IsGitRepository.Tests.bats
+		tests\IsWorkingDirectoryClean.Tests.bats = tests\IsWorkingDirectoryClean.Tests.bats
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6E40E36B-A01B-4492-8501-2C8556F147CB} = {562D9D60-67AE-443C-94E0-0638A3A10618}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E40E36B-A01B-4492-8501-2C8556F147CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E40E36B-A01B-4492-8501-2C8556F147CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E40E36B-A01B-4492-8501-2C8556F147CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E40E36B-A01B-4492-8501-2C8556F147CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
