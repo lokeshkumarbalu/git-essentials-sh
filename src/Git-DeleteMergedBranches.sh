@@ -35,10 +35,7 @@ then
     printf "Delete branches if they have been merged. Mode: { Local: %s; Remote: %s }\n" $Local $Remote
     git fetch
 
-    # Check if the working tree is clean.
-    IsWorkingDirectoryClean
-
-    if [[ $? -eq 1 ]];
+    if IsWorkingDirectoryClean
     then
         # Switch to master branch before deleting merged branches.
         git checkout master &> /dev/null
