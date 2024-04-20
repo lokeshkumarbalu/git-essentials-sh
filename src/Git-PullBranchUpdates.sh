@@ -4,12 +4,11 @@ source Git-Common.sh
 
 if IsGitRepository
 then
-
-    if IsWorkingDirectoryClean;
+    if IsWorkingDirectoryClean && RemoteNamedOriginExists;
     then
-        # Print message if uncommited changes found.
-        echo "Working tree is not clean, commit or discard changes."
-    else
+        # Get the default branch name.
+        defaultBranch=$(GetDefaultBranchName)
+        
         git fetch
         # Get all the local branches.
         localBranches=$(git branch | sed -e 's/*/ /g')
@@ -18,18 +17,23 @@ then
         for branch in $localBranches
         do
             git checkout "$branch" 1> /dev/null
-            remote=$(git rev-parse --abbrev-ref --symbolic-full-name @{u})
-
+            remote=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}')
+                        
+            if [ -z "$remote" ];
+            then
+                printf "No remote branch found for '%s'\n\n" "$branch"
+                continue
+            fi
+            
             if git merge-base --is-ancestor "$branch" "$remote";
                 then git merge --ff-only "$remote"
             fi
+            
+            printf "\n"
         done
 
-        # Checkout to master branch once all the update is done.
-        echo ""
-        echo "All branches have been updated."
-        git checkout master &> /dev/null
+        # Checkout to default branch once all the update is done.
+        printf "All branches have been updated\n"
+        git checkout "$defaultBranch" &> /dev/null
     fi
-else 
-    echo "No updates found on remote aborting branch update"
 fi

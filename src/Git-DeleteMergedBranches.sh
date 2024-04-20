@@ -24,7 +24,7 @@ done
 
 if [[ $Local == "$Remote" ]]
 then 
-    echo "Cannot run without an option, specify --local or --remote" 
+    printf "Cannot run without an option, specify --local or --remote" 
     exit
 fi
 
@@ -35,26 +35,30 @@ then
     printf "Delete branches if they have been merged. Mode: { Local: %s; Remote: %s }\n" $Local $Remote
     git fetch
 
-    if IsWorkingDirectoryClean
+    if IsWorkingDirectoryClean && RemoteNamedOriginExists;
     then
-        # Switch to master branch before deleting merged branches.
-        git checkout master &> /dev/null
+        # Get the default branch name.
+        defaultBranch=$(GetDefaultBranchName)
+        printf "Default branch: %s\n" "$defaultBranch"
+        
+        # Switch to default branch before deleting merged branches.
+        git checkout "$defaultBranch" &> /dev/null
         git pull &> /dev/null
 
-        # Get all the merged branches with master.
-        if $Local; then mergedBranches=$(git branch --merged master | grep 'feature.*')
-        elif $Remote; then mergedBranches=$(git branch --merged master --remotes | grep 'origin/feature.*' | cut -c 10-)
+        # Get all the merged branches with default.
+        if $Local; then mergedBranches=$(git branch --merged "$defaultBranch" | grep 'feature.*')
+        elif $Remote; then mergedBranches=$(git branch --merged "$defaultBranch" --remotes | grep 'origin/feature.*' | cut -c 10-)
         fi
 
         # Loop through the merged branches and delete them.
         for branch in $mergedBranches
-        do 
+        do          
             if $Local; then git branch --delete "$branch"
             elif $Remote; then git push --delete origin "$branch"
             fi
         done 
     else
         # Print message if uncommited changes found.
-        echo "Working tree is not clean, commit or discard changes."
+        printf "Working tree is not clean, commit or discard changes\n"
     fi
 fi

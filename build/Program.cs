@@ -9,7 +9,7 @@ Targets.Target(Operation.CreateFolders, Targets.ForEach(outputFolder), Utilities
 Targets.Target(Operation.InitialiseFolders, Targets.DependsOn(Operation.Clean, Operation.CreateFolders));
 
 Targets.Target(Operation.CopyShellScripts, () => Utilities.CopyShellScriptsToGit("src", gitInstallationPath));
-Targets.Target(Operation.Default, Targets.DependsOn(Operation.InitialiseFolders));
+Targets.Target(Operation.Default, Targets.DependsOn(Operation.InitialiseFolders, Operation.CopyShellScripts));
 await Targets.RunTargetsAndExitAsync(args);
 
 internal static class Operation

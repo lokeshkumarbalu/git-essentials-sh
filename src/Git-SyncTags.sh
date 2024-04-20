@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source Git-Common.sh
-if IsGitRepository;
+if IsGitRepository && RemoteNamedOriginExists;
 then
     git fetch --prune origin "+refs/tags/*:refs/tags/*"
 else

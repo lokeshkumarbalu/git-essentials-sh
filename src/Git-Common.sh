@@ -28,3 +28,21 @@ function IsWorkingDirectoryClean()
     else return 1
     fi
 }
+
+# Name:         GetDefaultBranchName
+# Description:  This function retrieves the name of the default branch in a Git repository.
+# Returns:      The name of the default branch in a Git repository.
+function GetDefaultBranchName()
+{
+    git remote show origin | grep 'HEAD branch' | cut -d' ' -f5
+}
+
+# Name:         RemoteNamedOriginExists
+# Description:  This function checks if a remote named 'origin' exists in the current Git repository.
+# Returns:      0 if a remote named 'origin' exists in the current Git repository, 1 otherwise.
+function RemoteNamedOriginExists()
+{
+    if [[ $(git remote | grep -c "origin") -eq 0 ]]; then return 1
+    else return 0
+    fi
+}
