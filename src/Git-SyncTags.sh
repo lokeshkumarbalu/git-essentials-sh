@@ -1,6 +1,9 @@
 #!/bin/bash
 
 source Git-Common.sh
-IsGitRepository
-
-git fetch --prune origin "+refs/tags/*:refs/tags/*"
+if IsGitRepository;
+then
+    git fetch --prune origin "+refs/tags/*:refs/tags/*"
+else
+    printf "Not a git repository."
+fi
